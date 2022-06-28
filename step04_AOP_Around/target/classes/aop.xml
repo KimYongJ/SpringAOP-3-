@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	<context:annotation-config /> <!-- 어노테이션을 사용하기 위해서는 어노테이션 콘피그가 반드시 있어야 되기 때문에 써주어야 한다. -->
+	<aop:aspectj-autoproxy/>      	<!--  이부분을 반드시 넣어주어야 코드가 삽입이 되므로 반드시 써주어야 한다. -->
+	<!-- <context:component-scan base-package="com.spring.aop"></context:component-scan>  전체를 인식시키기 위해 컴포넌트 스켄을 사용해 해당 클래스의 주소를 입력해준다
+	<context:component-scan base-package="com.spring.common"></context:component-scan>  전체를 인식시키기 위해 컴포넌트 스켄을 사용해 해당 클래스의 주소를 입력해준다 -->
+		<bean id="car" class="com.spring.aop.Car"></bean>
+		<bean id="common" class="com.spring.common.AroundAspect"></bean>
+		
+	<aop:config>
+		<aop:aspect id="commonAspect" ref="common">
+			<aop:around method="aroundAspect" pointcut="within(com.spring.aop.*)"/>
+		</aop:aspect>
+	</aop:config>
+	
+	
+</beans>
